@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ibbi · Login</title>
+  <script>
+    if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)&&window.innerWidth>=768)
+      window.location.replace('login.html');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <link rel="stylesheet" href="shared/mobile-styles.css">
+  <style>
+    .pub-topbar {
+      display: flex; align-items: center; height: 56px;
+      padding: 0 8px; background: #fff;
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+      position: relative; z-index: 100;
+    }
+    .topbar-back-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border: none; background: none;
+      cursor: pointer; color: var(--blue); font-size: .85rem; font-weight: 600;
+    }
+    .topbar-back-btn svg { width: 22px; height: 22px; }
+    .pub-logo-center {
+      flex: 1; text-align: center;
+      font-size: 1.15rem; font-weight: 900; color: var(--navy);
+      letter-spacing: -1px;
+    }
+    .topbar-spacer { width: 44px; flex-shrink: 0; }
+    /* switch tab active/inactive */
+    .mob-tab-active   { background: var(--navy)!important; color: #fff!important; }
+    .mob-tab-inactive { background: #fff!important; color: var(--text-mid)!important; }
+    /* error message */
+    .mob-err {
+      display: none; color: var(--red);
+      font-size: .8rem; font-weight: 600;
+      background: #fee2e2; border-radius: 8px;
+      padding: 10px 12px; margin-bottom: 12px;
+    }
+    /* forgot link */
+    .forgot-link {
+      font-size: .8rem; color: var(--blue);
+      font-weight: 600; text-align: right;
+      display: block; margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <!-- Topbar -->
+    <header class="pub-topbar">
+      <button class="topbar-back-btn" onclick="history.back()" aria-label="Späť">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="pub-logo-center">ibbi</span>
+      <div class="topbar-spacer"></div>
+    </header>
+
+    <div class="content">
+      <div class="pad" style="padding-top:40px;max-width:400px;margin:0 auto">
+
+        <!-- Logo mark -->
+        <div style="text-align:center;margin-bottom:32px">
+          <div style="
+            width:64px;height:64px;border-radius:18px;
+            background:var(--navy);color:#fff;
+            font-size:1.4rem;font-weight:900;letter-spacing:-1.5px;
+            display:flex;align-items:center;justify-content:center;
+            margin:0 auto 12px;
+          ">IB</div>
+          <h1 style="font-size:1.5rem;font-weight:900;color:var(--navy)">Vitaj späť</h1>
+          <p style="font-size:.82rem;color:var(--text-mid);margin-top:4px">Prihlás sa do svojho účtu</p>
+        </div>
+
+        <!-- Business / Influencer toggle -->
+        <div style="display:flex;gap:0;margin-bottom:24px;
+          border:1.5px solid var(--border);border-radius:12px;overflow:hidden">
+          <button id="mob-login-biz" style="flex:1;padding:12px;
+            font-weight:700;font-size:.88rem;border:none;cursor:pointer;
+            font-family:inherit;transition:all .15s"
+            class="mob-tab-active"
+            onclick="switchMobLoginTab('biz')">Business</button>
+          <button id="mob-login-infl" style="flex:1;padding:12px;
+            font-weight:700;font-size:.88rem;border:none;cursor:pointer;
+            font-family:inherit;transition:all .15s"
+            class="mob-tab-inactive"
+            onclick="switchMobLoginTab('infl')">Influencer</button>
+        </div>
+
+        <!-- Error -->
+        <div id="mob-login-err" class="mob-err"></div>
+
+        <!-- Email -->
+        <div class="field">
+          <label>Email</label>
+          <input class="input" id="mob-login-email"
+            type="email" placeholder="email@firma.sk"
+            autocomplete="email" inputmode="email">
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label>Heslo</label>
+          <input class="input" id="mob-login-pwd"
+            type="password" placeholder="••••••••"
+            autocomplete="current-password">
+          <a href="#" class="forgot-link" onclick="return false">Zabudol som heslo</a>
+        </div>
+
+        <!-- Login button -->
+        <button id="mob-login-btn" class="btn btn-blue" style="width:100%;height:52px;margin-top:8px;border-radius:12px"
+          onclick="doMobLogin()">
+          Prihlásiť sa
+        </button>
+
+        <!-- Demo mode -->
+        <button class="btn btn-soft" style="width:100%;height:52px;margin-top:10px;border-radius:12px;border:1.5px solid var(--blue-mid)"
+          onclick="demoLogin(S.mobLoginRole||'business')">
+          Demo mode
+        </button>
+
+        <!-- Register link -->
+        <div style="text-align:center;margin-top:24px">
+          <span style="font-size:.85rem;color:var(--text-mid)">Nemáš účet?</span>
+          <a href="register-mobile.html" style="font-size:.85rem;font-weight:700;color:var(--blue);margin-left:6px">
+            Registruj sa
+          </a>
+        </div>
+
+      </div><!-- /pad -->
+    </div><!-- /content -->
+  </div><!-- /screen -->
+
+  <script src="shared/icons.js"></script>
+  <script src="shared/core.js"></script>
+  <script src="shared/state.js"></script>
+  <script src="shared/lang.js"></script>
+  <script src="shared/auth.js"></script>
+  <script src="shared/toast.js"></script>
+  <script>
+    // Initialise role from S
+    S.mobLoginRole = S.mobLoginRole || 'business';
+
+    function switchMobLoginTab(role) {
+      S.mobLoginRole = role;
+      S.loginTab = role === 'biz' ? 'biz' : 'infl';
+      const bizBtn  = document.getElementById('mob-login-biz');
+      const inflBtn = document.getElementById('mob-login-infl');
+      if (role === 'biz') {
+        bizBtn.className  = 'mob-tab-active';
+        inflBtn.className = 'mob-tab-inactive';
+      } else {
+        inflBtn.className = 'mob-tab-active';
+        bizBtn.className  = 'mob-tab-inactive';
+      }
+    }
+
+    async function doMobLogin() {
+      const email = document.getElementById('mob-login-email').value.trim();
+      const pwd   = document.getElementById('mob-login-pwd').value;
+      const errEl = document.getElementById('mob-login-err');
+      const btn   = document.getElementById('mob-login-btn');
+      errEl.style.display = 'none';
+
+      if (!email || !pwd) {
+        errEl.textContent = 'Zadaj email a heslo.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.textContent = 'Prihlasovanie…';
+      btn.disabled = true;
+      APP._loggingIn = true;
+
+      const { data, error } = await _sb.auth.signInWithPassword({ email, password: pwd });
+      APP._loggingIn = false;
+      btn.textContent = 'Prihlásiť sa';
+      btn.disabled = false;
+
+      if (error) {
+        const msg = error.message.toLowerCase().includes('email not confirmed')
+          ? 'Potvrď svoju emailovú adresu.'
+          : error.message;
+        errEl.textContent = msg;
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const uid = data.user.id;
+      const [bizRes, inflRes] = await Promise.all([
+        _sb.from('business_profiles').select('id').eq('user_id', uid).maybeSingle(),
+        _sb.from('influencer_profiles').select('id').eq('user_id', uid).maybeSingle(),
+      ]);
+      const hasBiz = !!bizRes.data, hasInfl = !!inflRes.data;
+
+      if (hasBiz && hasInfl) {
+        APP.user = data.user;
+        showRolePicker();
+        return;
+      }
+
+      const tabRole = S.mobLoginRole === 'biz' ? 'business' : 'influencer';
+      const role = hasBiz ? 'business' : hasInfl ? 'influencer' : tabRole;
+      enterApp(role);
+    }
+  </script>
+</body>
+</html>
