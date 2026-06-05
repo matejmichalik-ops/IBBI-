@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBBI — Create Account</title>
+<link rel="stylesheet" href="shared/styles.css">
+</head>
+<body>
+<script src="shared/icons.js"></script>
+
+<!-- ======================== SIGNUP ROLE PICKER ======================== -->
+<div id="page-signup-role" class="hidden">
+  <div style="min-height:90vh;display:flex;align-items:center;justify-content:center;background:var(--blue-soft);padding:40px 20px">
+    <div style="max-width:720px;width:100%;text-align:center">
+      <div class="tag" style="margin-bottom:20px" data-i18n="reg-tag">Create Account</div>
+      <h1 style="font-size:2.2rem;color:var(--navy);margin-bottom:12px" data-i18n="reg-title">Who are you joining as?</h1>
+      <p style="color:var(--text-mid);margin-bottom:48px;font-size:1.05rem" data-i18n="reg-sub">Choose your role — you can always switch later in settings.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:560px;margin:0 auto">
+        <div class="card" onclick="go('influencer-signup')" style="cursor:pointer;padding:40px 28px;text-align:center;border:2px solid transparent;transition:.2s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='transparent'">
+          <div style="width:68px;height:68px;border-radius:18px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="36" height="36" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#ico-creator"/></svg></div>
+          <h3 style="color:var(--navy);margin-bottom:8px">Influencer</h3>
+          <p style="color:var(--text-mid);font-size:.9rem;line-height:1.5" data-i18n="reg-infl-desc">I create content and want to collaborate with brands for campaigns &amp; rewards.</p>
+          <button class="btn btn-primary" style="margin-top:24px;width:100%" data-i18n="reg-infl-btn">Join as Influencer</button>
+        </div>
+        <div class="card" onclick="go('business-signup')" style="cursor:pointer;padding:40px 28px;text-align:center;border:2px solid transparent;transition:.2s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='transparent'">
+          <div style="width:68px;height:68px;border-radius:18px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="36" height="36" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#ico-building"/></svg></div>
+          <h3 style="color:var(--navy);margin-bottom:8px" data-i18n="reg-biz-name">Business</h3>
+          <p style="color:var(--text-mid);font-size:.9rem;line-height:1.5" data-i18n="reg-biz-desc">I represent a brand or company and want to find influencers for campaigns.</p>
+          <button class="btn btn-primary" style="margin-top:24px;width:100%" data-i18n="reg-biz-btn">Join as Business</button>
+        </div>
+      </div>
+      <p style="color:var(--text-mid);margin-top:32px;font-size:.9rem" data-i18n="reg-login-link">Already have an account? <a onclick="go('login')" style="color:var(--blue);cursor:pointer;font-weight:600">Sign in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== INFLUENCER SIGNUP ======================== -->
+<div id="page-influencer-signup" class="hidden">
+  <div style="min-height:90vh;display:flex;align-items:center;justify-content:center;background:var(--blue-soft);padding:40px 20px">
+    <div style="max-width:480px;width:100%">
+      <div class="card" style="padding:48px 40px">
+        <div style="text-align:center;margin-bottom:32px">
+          <div style="width:56px;height:56px;border-radius:16px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 8px"><svg width="30" height="30" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#ico-creator"/></svg></div>
+          <h2 style="color:var(--navy);margin-bottom:4px">Create Influencer Account</h2>
+          <p style="color:var(--text-mid);font-size:.9rem">Start earning with your audience today</p>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:32px">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700">1</div>
+          <div style="width:48px;height:2px;background:var(--border)"></div>
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--text-mid);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700">2</div>
+          <div style="width:48px;height:2px;background:var(--border)"></div>
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--text-mid);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700">3</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">First Name</label>
+              <input id="infl-first" type="text" placeholder="Jana" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            </div>
+            <div>
+              <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Last Name</label>
+              <input id="infl-last" type="text" placeholder="Nováková" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            </div>
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Username</label>
+            <input id="infl-username" type="text" placeholder="@janainfluencer" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Email</label>
+            <input id="infl-email" type="email" placeholder="jana@example.com" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Password</label>
+            <input id="infl-pass" type="password" placeholder="Min. 8 characters" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Primary Niche</label>
+            <select id="infl-niche" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;background:white;color:var(--navy);cursor:pointer">
+              <option value="">Select your niche…</option>
+              <option>Fashion &amp; Style</option>
+              <option>Beauty &amp; Makeup</option>
+              <option>Fitness &amp; Health</option>
+              <option>Food &amp; Cooking</option>
+              <option>Travel &amp; Adventure</option>
+              <option>Technology</option>
+              <option>Gaming</option>
+              <option>Lifestyle</option>
+              <option>Business &amp; Finance</option>
+              <option>Parenting &amp; Family</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.88rem;color:var(--text-mid);line-height:1.4">
+            <input type="checkbox" style="margin-top:2px;accent-color:var(--blue)">
+            I agree to IBBI's <span style="color:var(--blue)">Terms of Service</span> and <span style="color:var(--blue)">Privacy Policy</span>
+          </label>
+          <button id="infl-signup-btn" class="btn btn-primary" style="width:100%;padding:14px;font-size:1rem" data-i18n="infl-signup-btn-lbl" onclick="doInflSignup()">Continue to Verification →</button>
+          <div id="infl-signup-err" style="color:#ef4444;font-size:.85rem;text-align:center;display:none"></div>
+        </div>
+        <p style="text-align:center;color:var(--text-mid);font-size:.9rem;margin-top:20px">Already have an account? <a onclick="go('login')" style="color:var(--blue);cursor:pointer;font-weight:600">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== BUSINESS SIGNUP ======================== -->
+<div id="page-business-signup" class="hidden">
+  <div style="min-height:90vh;display:flex;align-items:center;justify-content:center;background:var(--blue-soft);padding:40px 20px">
+    <div style="max-width:480px;width:100%">
+      <div class="card" style="padding:48px 40px">
+        <div style="text-align:center;margin-bottom:32px">
+          <div style="width:56px;height:56px;border-radius:16px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 8px"><svg width="30" height="30" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#ico-building"/></svg></div>
+          <h2 style="color:var(--navy);margin-bottom:4px">Create Business Account</h2>
+          <p style="color:var(--text-mid);font-size:.9rem">Launch your first influencer campaign in minutes</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Company / Brand Name</label>
+            <input id="biz-company" type="text" placeholder="Acme s.r.o." style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Industry</label>
+            <select id="biz-industry" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;background:white;color:var(--navy);cursor:pointer">
+              <option value="">Select industry…</option>
+              <option>Fashion &amp; Apparel</option>
+              <option>Beauty &amp; Cosmetics</option>
+              <option>Food &amp; Beverage</option>
+              <option>Fitness &amp; Wellness</option>
+              <option>Technology &amp; Apps</option>
+              <option>Travel &amp; Hospitality</option>
+              <option>Finance &amp; Fintech</option>
+              <option>E-commerce</option>
+              <option>Gaming</option>
+              <option>Education</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Work Email</label>
+            <input id="biz-email" type="email" placeholder="marketing@company.sk" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Password</label>
+            <input id="biz-pass" type="password" placeholder="Min. 8 characters" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px">Website (optional)</label>
+            <input id="biz-website" type="url" placeholder="https://yourcompany.sk" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;box-sizing:border-box;transition:.2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.88rem;color:var(--text-mid);line-height:1.4">
+            <input id="biz-terms" type="checkbox" style="margin-top:2px;accent-color:var(--blue)">
+            I agree to IBBI's <span style="color:var(--blue)">Terms of Service</span> and <span style="color:var(--blue)">Privacy Policy</span>
+          </label>
+          <button id="biz-signup-btn" class="btn btn-primary" style="width:100%;padding:14px;font-size:1rem" data-i18n="biz-signup-btn-lbl" onclick="doBizSignup()">Create Account &amp; Enter Dashboard →</button>
+          <div id="biz-signup-err" style="color:#ef4444;font-size:.85rem;text-align:center;display:none"></div>
+        </div>
+        <p style="text-align:center;color:var(--text-mid);font-size:.9rem;margin-top:20px">Already have an account? <a onclick="go('login')" style="color:var(--blue);cursor:pointer;font-weight:600">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== INFLUENCER SOCIAL VERIFICATION ======================== -->
+<div id="page-influencer-verification" class="hidden">
+  <div style="min-height:90vh;display:flex;align-items:center;justify-content:center;background:var(--blue-soft);padding:40px 20px">
+    <div style="max-width:520px;width:100%">
+      <div class="card" style="padding:48px 40px;text-align:center">
+        <div style="width:64px;height:64px;border-radius:18px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><svg width="34" height="34" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#ico-link"/></svg></div>
+        <h2 style="color:var(--navy);margin-bottom:8px">Connect Your Socials</h2>
+        <p style="color:var(--text-mid);font-size:.95rem;margin-bottom:12px">Connect at least one social account so brands can discover you and verify your reach.</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:36px">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--blue-light);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;border:2px solid var(--blue)">✓</div>
+          <div style="width:48px;height:2px;background:var(--blue)"></div>
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700">2</div>
+          <div style="width:48px;height:2px;background:var(--border)"></div>
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--text-mid);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700">3</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;text-align:left;margin-bottom:32px">
+          <div id="verify-ig" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:2px solid var(--border);border-radius:12px;transition:.2s">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="display:flex;align-items:center"><svg width="30" height="30" viewBox="0 0 24 24" style="color:#e1306c"><use href="#ico-instagram"/></svg></span>
+              <div><div style="font-weight:700;color:var(--navy)">Instagram</div><div style="font-size:.82rem;color:var(--text-mid)">Connect your Instagram profile</div></div>
+            </div>
+            <button onclick="connectSocial('ig')" style="padding:8px 16px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer">Connect</button>
+          </div>
+          <div id="verify-tt" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:2px solid var(--border);border-radius:12px;transition:.2s">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="display:flex;align-items:center"><svg width="30" height="30" viewBox="0 0 24 24" style="color:#010101"><use href="#ico-tiktok"/></svg></span>
+              <div><div style="font-weight:700;color:var(--navy)">TikTok</div><div style="font-size:.82rem;color:var(--text-mid)">Connect your TikTok account</div></div>
+            </div>
+            <button onclick="connectSocial('tt')" style="padding:8px 16px;background:#000;color:white;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer">Connect</button>
+          </div>
+          <div id="verify-yt" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:2px solid var(--border);border-radius:12px;transition:.2s">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="display:flex;align-items:center"><svg width="30" height="30" viewBox="0 0 24 24" style="color:#ff0000"><use href="#ico-youtube"/></svg></span>
+              <div><div style="font-weight:700;color:var(--navy)">YouTube</div><div style="font-size:.82rem;color:var(--text-mid)">Connect your YouTube channel</div></div>
+            </div>
+            <button onclick="connectSocial('yt')" style="padding:8px 16px;background:#ff0000;color:white;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer">Connect</button>
+          </div>
+          <div id="verify-fb" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:2px solid var(--border);border-radius:12px;transition:.2s">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="display:flex;align-items:center"><svg width="30" height="30" viewBox="0 0 24 24" style="color:#1877f2"><use href="#ico-facebook"/></svg></span>
+              <div><div style="font-weight:700;color:var(--navy)">Facebook</div><div style="font-size:.82rem;color:var(--text-mid)">Connect your Facebook page</div></div>
+            </div>
+            <button onclick="connectSocial('fb')" style="padding:8px 16px;background:#1877f2;color:white;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer">Connect</button>
+          </div>
+        </div>
+        <p id="verify-msg" style="font-size:.88rem;color:var(--text-mid);margin-bottom:20px">Connect at least 1 platform to continue</p>
+        <button id="verify-continue" class="btn btn-primary" style="width:100%;padding:14px;font-size:1rem;opacity:.4;pointer-events:none" onclick="finishInflSignup()">Complete Setup &amp; Go to Dashboard →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state.js"></script>
+<script src="shared/core.js"></script>
+<script src="shared/lang.js"></script>
+<script src="shared/router.js"></script>
+<script src="shared/auth.js"></script>
+<script>initRegister();</script>
+</body>
+</html>
