@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBBI — Business Portal</title>
+<link rel="stylesheet" href="shared/styles.css">
+</head>
+<body>
+<script>
+// Ak demo mód aktívny → zobraz back button
+(function() {
+  const isDemoMode =
+    sessionStorage.getItem('ibbi_demo') ||
+    sessionStorage.getItem('ibbi_demo_role');
+  if (!isDemoMode) return;
+
+  const btn = document.createElement('div');
+  btn.id = 'demo-back-banner';
+  btn.style.cssText =
+    'position:fixed;top:0;left:0;right:0;'
+    +'background:var(--navy,#0D1B3E);color:#fff;'
+    +'padding:8px 20px;font-size:.82rem;'
+    +'display:flex;align-items:center;'
+    +'justify-content:space-between;'
+    +'z-index:99999;font-family:inherit';
+  btn.innerHTML = `
+    <span style="opacity:.8">
+      👀 Demo mód — prezeráš si ibbi ako hosť
+    </span>
+    <a href="index.html"
+      onclick="
+        sessionStorage.removeItem('ibbi_demo');
+        sessionStorage.removeItem('ibbi_demo_role');"
+      style="color:#fff;font-weight:700;
+        text-decoration:none;
+        background:rgba(255,255,255,.15);
+        padding:4px 12px;border-radius:6px;
+        font-size:.8rem">
+      ← Späť na ibbi.sk
+    </a>`;
+  document.body.prepend(btn);
+
+  // Posuň obsah dole aby banner neprekrýval topbar
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.getElementById('mob-root')
+      || document.querySelector('.app-shell')
+      || document.body;
+    if (root && root !== document.body) {
+      root.style.marginTop = '36px';
+    }
+  });
+})();
+</script>
+<script src="shared/icons.js"></script>
+
+<!-- ======================== BUSINESS APP SHELL ======================== -->
+<div id="app-business" class="app-shell">
+  <aside class="sidebar" id="biz-sidebar">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 80 32" width="72" height="28" xmlns="http://www.w3.org/2000/svg">
+        <text x="50%" y="26" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="900" font-size="28" letter-spacing="-0.5" fill="#2079FF">IBBI</text>
+      </svg>
+    </div>
+    <nav style="flex:1;display:flex;flex-direction:column;gap:4px">
+      <div class="nav-item" id="biz-nav-dashboard" onclick="bizPage('dashboard')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-dashboard"/></svg><span class="nav-label" data-i18n="nav-sidebar-dashboard">Dashboard</span>
+      </div>
+      <div class="nav-item" id="biz-nav-campaigns" onclick="bizPage('campaigns')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-campaigns"/></svg><span class="nav-label" data-i18n="nav-sidebar-campaigns">Campaigns</span>
+      </div>
+      <div class="nav-item" id="biz-nav-discover" onclick="bizPage('discover')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-discover"/></svg><span class="nav-label" data-i18n="nav-sidebar-discover">Discover</span>
+      </div>
+      <div class="nav-item" id="biz-nav-messages" onclick="bizPage('messages')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-messages"/></svg><span class="nav-label" data-i18n="nav-sidebar-messages">Messages</span>
+      </div>
+      <div class="nav-item" id="biz-nav-analytics" onclick="bizPage('analytics')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-analytics"/></svg><span class="nav-label" data-i18n="nav-sidebar-analytics">Analytics</span>
+      </div>
+      <div class="nav-item" id="biz-nav-wallet" onclick="bizPage('wallet')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-wallet"/></svg><span class="nav-label" data-i18n="nav-sidebar-wallet">Wallet</span>
+      </div>
+      <div class="nav-item" id="biz-nav-profile" onclick="bizPage('profile')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-profile"/></svg><span class="nav-label" data-i18n="nav-sidebar-profile">Profile</span>
+      </div>
+    </nav>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:4px">
+
+      <div class="nav-item" id="biz-nav-settings" onclick="bizPage('settings')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-settings"/></svg><span class="nav-label" data-i18n="nav-sidebar-settings">Settings</span>
+      </div>
+      <div class="nav-item" onclick="doSignOut()" style="color:rgba(255,255,255,.3)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><use href="#ico-exit"/></svg><span class="nav-label" data-i18n="nav-sidebar-exit">Exit</span>
+      </div>
+    </div>
+  </aside>
+  <main class="app-main">
+    <header class="app-topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="biz-page-title" style="font-size:1.3rem;font-weight:800;color:var(--navy)">Dashboard</div>
+      </div>
+      <div data-i18n="app-biz-portal" style="position:absolute;left:50%;transform:translateX(-50%);font-size:1.1rem;font-weight:800;color:var(--navy);letter-spacing:.01em">Business <span style="color:var(--blue)">Portal</span></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button id="biz-switch-role-btn" onclick="switchRole('influencer')" style="display:none;padding:6px 14px;border-radius:50px;border:1.5px solid var(--blue-mid);background:var(--blue-light);cursor:pointer;font-size:.78rem;font-weight:700;color:var(--blue)">⇄ Influencer</button>
+        <div class="lang-switcher app-lang">
+          <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" data-lang="sk" onclick="setLang('sk')">SK</button>
+        </div>
+        <button id="biz-get-pro-btn" class="pu-get-pro-btn" onclick="showSubscriptionModal()" style="display:none">⚡ Get Pro</button>
+        <button id="biz-manage-sub-btn" onclick="_handleManagePayment()" style="display:none;padding:8px 16px;border:1.5px solid var(--border);background:#fff;color:var(--navy);border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem" onmouseover="this.style.background='var(--blue-soft)'" onmouseout="this.style.background='#fff'" data-t="sub-manage-btn">⚙️ Manage Subscription</button>
+        <span id="biz-pro-badge" class="pu-pro-badge-top" style="display:none">⚡ Pro</span>
+        <div style="position:relative">
+          <button onclick="toggleNotifs('biz')" style="width:40px;height:40px;border-radius:10px;border:1.5px solid var(--blue-mid);background:var(--blue-light);cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#ico-bell"/></svg></button>
+          <span id="biz-notif-badge" style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:var(--blue);color:white;border-radius:50%;font-size:.65rem;display:none;align-items:center;justify-content:center;font-weight:700">0</span>
+        </div>
+        <div onclick="bizPage('settings')" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 12px;border-radius:10px;border:1.5px solid var(--blue-mid);background:var(--blue-light)">
+          <div id="biz-topbar-avatar" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-dark));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.85rem">IB</div>
+          <span id="biz-topbar-name" style="font-weight:600;color:var(--navy);font-size:.9rem">My Company</span>
+        </div>
+      </div>
+    </header>
+    <div id="biz-content" class="app-content"></div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state.js"></script>
+<script src="shared/core.js"></script>
+<script src="shared/lang.js"></script>
+<script src="shared/router.js"></script>
+<script src="shared/components.js"></script>
+<script src="shared/charts.js"></script>
+<script src="shared/smart-match.js"></script>
+<script src="shared/filters.js"></script>
+<script src="shared/wallet.js"></script>
+<script src="shared/notifications.js"></script>
+<script src="shared/messaging.js"></script>
+<script src="shared/ratings.js"></script>
+<script src="shared/profile-modal.js"></script>
+<script src="shared/auth2fa.js"></script>
+<script src="shared/admin.js"></script>
+<script src="shared/auth.js"></script>
+<script src="biz/renders.js"></script>
+<script src="biz/campaign-detail.js"></script>
+<script src="shared/invite.js"></script>
+<script src="infl/renders.js"></script>
+<script src="shared/handlers.js"></script>
+<script>initBizApp();</script>
+</body>
+</html>
